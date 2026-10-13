@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090812">
+<meta name="description" content="Mind Trap — a mysterious brain-teaser game. Think carefully. Trust nothing.">
+<title>Mind Trap — Think Outside the Trap</title>
+<style>
+:root{--bg:#090812;--panel:#151127;--purple:#a47aff;--pink:#ff70d8;--cyan:#70efff;--text:#f5f2ff;--muted:#aaa4c5;--border:rgba(176,139,255,.22);--good:#69f0ae;--bad:#ff6b8a}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(ellipse at 15% 10%,rgba(112,53,207,.22),transparent 38%),radial-gradient(ellipse at 85% 35%,rgba(32,128,167,.12),transparent 32%),var(--bg);overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background-image:linear-gradient(rgba(166,132,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(166,132,255,.035) 1px,transparent 1px);background-size:44px 44px;mask-image:linear-gradient(to bottom,#000,transparent 90%)}
+.orb{position:fixed;width:240px;height:240px;border-radius:50%;filter:blur(80px);opacity:.14;pointer-events:none;z-index:-1;animation:float 10s ease-in-out infinite alternate}.orb.one{background:#8a42ff;top:18%;left:-100px}.orb.two{background:#00d9ff;right:-120px;top:58%;animation-delay:-4s}
+@keyframes float{to{transform:translate(30px,-35px) scale(1.15)}}@keyframes pulse{0%,100%{box-shadow:0 0 18px #9b6cff30}50%{box-shadow:0 0 35px #9b6cff70}}@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}@keyframes spin{to{transform:rotate(360deg)}}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.wrap{width:min(1100px,calc(100% - 36px));margin:auto}header{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:22px 0}.brand{display:flex;align-items:center;gap:11px;color:var(--text);text-decoration:none;font-weight:900;letter-spacing:1.6px}.brand-mark{display:grid;place-items:center;width:40px;height:40px;border:1px solid #9b6cffb3;border-radius:13px;background:linear-gradient(135deg,#9b6cff47,#ff5fd21a);box-shadow:0 0 22px #9b6cff33;font-size:20px}.brand span:last-child{font-size:15px}nav{display:flex;align-items:center;gap:24px}nav a{color:var(--muted);text-decoration:none;font-size:13px}nav a:hover{color:white}.top-score{font-size:12px;color:var(--muted);border:1px solid var(--border);background:#141025bf;padding:10px 13px;border-radius:999px;white-space:nowrap}.top-score b{color:var(--cyan)}
+.hero{display:grid;grid-template-columns:1.08fr .92fr;align-items:center;gap:42px;padding:55px 0 66px;animation:rise .7s ease both}.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--border);border-radius:999px;color:#c9b5ff;background:#9b6cff14;font-size:11px;text-transform:uppercase;letter-spacing:1.8px}.dot{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 12px var(--good)}h1{margin:22px 0 16px;font-size:clamp(48px,7vw,82px);line-height:.98;letter-spacing:-4px}.gradient{background:linear-gradient(100deg,#fff 5%,#c6a8ff 48%,#ff8be3 92%);color:transparent;background-clip:text;-webkit-background-clip:text}.hero p{max-width:510px;color:var(--muted);font-size:16px;line-height:1.8;margin:0 0 27px}.actions{display:flex;gap:12px;flex-wrap:wrap}button{font:inherit;cursor:pointer;border:0}.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:46px;padding:0 19px;border-radius:13px;font-weight:750;font-size:13px;transition:transform .18s,filter .18s,border-color .18s}.btn:hover{transform:translateY(-2px);filter:brightness(1.1)}.btn:active{transform:translateY(0)}.primary{color:#10091d;background:linear-gradient(110deg,#c0a1ff,#ff8be3);box-shadow:0 8px 28px #9b6cff3d}.secondary{color:var(--text);background:#ffffff09;border:1px solid var(--border)}
+.hero-art{min-height:330px;display:grid;place-items:center;position:relative}.portal{width:min(320px,80vw);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;position:relative;background:radial-gradient(circle,#9b6cff33,#0f0c1c33 54%,transparent 70%)}.ring{position:absolute;border:1px solid #aa84ff73;border-radius:50%;inset:8%;animation:spin 28s linear infinite}.ring:before,.ring:after{content:"";position:absolute;width:10px;height:10px;border-radius:50%;background:var(--cyan);box-shadow:0 0 20px var(--cyan);top:16%;left:16%}.ring:after{width:7px;height:7px;background:var(--pink);box-shadow:0 0 18px var(--pink);top:auto;left:auto;right:7%;bottom:28%}.ring.r2{inset:19%;border-style:dashed;border-color:#ff5fd273;animation-direction:reverse;animation-duration:19s}.ring.r3{inset:30%;border-color:#70f0ff59;animation-duration:13s}.core{width:43%;aspect-ratio:1;display:grid;place-items:center;border-radius:29%;transform:rotate(45deg);background:linear-gradient(135deg,#9b6cff59,#ff5fd21f);border:1px solid #c7a7ffb3;box-shadow:0 0 65px #9b6cff47,inset 0 0 28px #9b6cff26;animation:pulse 4s infinite}.core span{transform:rotate(-45deg);font-size:clamp(48px,7vw,76px);filter:drop-shadow(0 0 18px #cdb0ff99)}.float-card{position:absolute;padding:12px 14px;background:#131022e8;border:1px solid var(--border);border-radius:13px;font-size:11px;color:var(--muted);backdrop-filter:blur(12px);box-shadow:0 12px 35px #0005}.float-card strong{display:block;color:var(--text);font-size:13px;margin-top:4px}.fc1{top:14%;right:-1%}.fc2{bottom:13%;left:-2%}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:20px}.section-head h2{font-size:clamp(24px,4vw,34px);letter-spacing:-1px;margin:0 0 7px}.section-head p{margin:0;color:var(--muted);font-size:13px}.pill{border:1px solid var(--border);color:#cdb8ff;border-radius:999px;padding:7px 11px;font-size:11px;white-space:nowrap}.game-section{padding:22px 0 68px}.game-layout{display:grid;grid-template-columns:1fr 265px;gap:18px;align-items:start}.panel{border:1px solid var(--border);border-radius:22px;background:linear-gradient(145deg,#19152eef,#0e0c1af0);box-shadow:0 22px 65px #0002;overflow:hidden}.game-top{display:flex;justify-content:space-between;align-items:center;padding:18px 21px;border-bottom:1px solid #b08bff1f}.game-top-label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}.level{color:var(--cyan);font-size:12px;font-weight:800}.game-content{padding:clamp(20px,4vw,34px)}.progress-track{height:5px;background:#29233f;border-radius:9px;overflow:hidden;margin-bottom:25px}.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--purple),var(--pink));transition:width .35s}.question-number{font-size:11px;color:#b8a2ed;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px}.question{font-size:clamp(21px,3.3vw,29px);line-height:1.35;letter-spacing:-.6px;margin:0 0 10px}.question-sub{color:var(--muted);font-size:13px;line-height:1.65;margin:0 0 24px}.answers{display:grid;grid-template-columns:1fr 1fr;gap:11px}.answer{min-height:58px;padding:13px 15px;text-align:left;color:#e9e4fa;border:1px solid #b08bff33;border-radius:13px;background:#ffffff06;transition:all .18s;display:flex;align-items:center;gap:12px}.answer:hover:not(:disabled){border-color:#b491ffb3;background:#9b6cff1a;transform:translateY(-1px)}.answer:disabled{cursor:default}.letter{width:27px;height:27px;flex:0 0 27px;display:grid;place-items:center;border:1px solid #b08bff3b;border-radius:8px;color:#bda9f0;font-size:11px;font-weight:800}.answer.correct{border-color:#69f0aeaa;background:#69f0ae17}.answer.correct .letter{color:var(--good);border-color:var(--good)}.answer.wrong{border-color:#ff6b8aaa;background:#ff6b8a14;animation:shake .25s}.answer.wrong .letter{color:var(--bad);border-color:var(--bad)}.feedback{min-height:24px;font-size:13px;line-height:1.6;margin:17px 0 7px;color:var(--muted)}.feedback.good{color:var(--good)}.feedback.bad{color:#ff9aaf}.game-controls{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:13px}.hint-btn{background:transparent;color:#cbb7ff;padding:10px 0;font-size:12px}.hint-btn:hover{color:white}.side{display:grid;gap:14px}.stat-panel{padding:20px}.stat-title{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:1.3px}.stat-value{font-size:32px;font-weight:850;letter-spacing:-1.5px;margin:10px 0 4px}.stat-note{font-size:11px;color:var(--muted)}.stat-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #b08bff1f;font-size:12px;color:var(--muted)}.stat-row:last-child{border:0;padding-bottom:0}.stat-row b{color:var(--text)}.mini-title{font-size:14px;font-weight:800;margin:0 0 10px}.how{padding:19px}.how p{font-size:12px;line-height:1.7;color:var(--muted);margin:0}.how strong{color:#e6dcff}.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding-bottom:70px}.feature{padding:22px;border:1px solid var(--border);border-radius:18px;background:#ffffff04}.feature-icon{font-size:23px;margin-bottom:15px}.feature h3{font-size:15px;margin:0 0 8px}.feature p{font-size:12px;line-height:1.7;color:var(--muted);margin:0}footer{border-top:1px solid #b08bff1c;padding:24px 0 34px;color:var(--muted);font-size:11px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}footer b{color:#d5c5ff}.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#201a36;border:1px solid var(--border);border-radius:12px;padding:12px 16px;color:var(--text);font-size:12px;box-shadow:0 10px 35px #0008;transition:.25s;z-index:10;max-width:calc(100% - 30px)}.toast.show{opacity:1;transform:translate(-50%,0)}.hidden{display:none!important}
+@media(max-width:800px){.hero{grid-template-columns:1fr;gap:10px;padding:38px 0 28px}.hero-art{min-height:290px}.portal{width:270px}.game-layout{grid-template-columns:1fr}.side{grid-template-columns:1fr 1fr}.feature-grid{grid-template-columns:1fr 1fr}nav{gap:14px}}
+@media(max-width:540px){.wrap{width:calc(100% - 26px)}header{padding:15px 0}.brand span:last-child{font-size:13px}nav{display:none}.top-score{font-size:11px;padding:9px 10px}.hero{padding-top:35px}h1{letter-spacing:-2.8px}.hero p{font-size:14px}.hero-art{min-height:260px}.portal{width:235px}.fc1{right:-2%}.fc2{left:-2%}.section-head{align-items:start;flex-direction:column}.answers{grid-template-columns:1fr}.answer{min-height:53px}.side{grid-template-columns:1fr 1fr}.stat-panel{padding:16px}.stat-value{font-size:27px}.feature-grid{grid-template-columns:1fr}.game-top{padding:15px 17px}.game-content{padding:20px 16px}.game-controls{align-items:flex-start}.game-controls .btn{padding:0 13px}.float-card{font-size:10px;padding:10px}.float-card strong{font-size:12px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div class="orb one"></div><div class="orb two"></div>
+<div class="wrap">
+<header>
+  <a class="brand" href="#" aria-label="Mind Trap home"><span class="brand-mark">⌘</span><span>MIND TRAP</span></a>
+  <nav aria-label="Main navigation"><a href="#play">Play</a><a href="#how">How to play</a><a href="#features">Features</a></nav>
+  <div class="top-score">BEST SCORE <b id="bestTop">0</b></div>
+</header>
+<main>
+<section class="hero">
+  <div>
+    <div class="eyebrow"><span class="dot"></span> Your mind is the playing field</div>
+    <h1>THINK OUTSIDE<br><span class="gradient">THE TRAP.</span></h1>
+    <p>Looks easy, right? Every question hides a twist. Outsmart the obvious, challenge your instincts, and prove your mind is harder to trap.</p>
+    <div class="actions"><button class="btn primary" id="heroPlay">▶ Play Mind Trap <span>↗</span></button><a class="btn secondary" href="#how">How to play&nbsp; ↓</a></div>
+  </div>
+  <div class="hero-art" aria-label="Animated glowing puzzle portal">
+    <div class="portal"><div class="ring"></div><div class="ring r2"></div><div class="ring r3"></div><div class="core"><span>?</span></div></div>
+    <div class="float-card fc1">🧠 BRAIN POWER<strong>100% unlocked</strong></div>
+    <div class="float-card fc2">✦ THINK DIFFERENT<strong>Beat the obvious</strong></div>
+  </div>
+</section>
+
+<section class="game-section" id="play">
+  <div class="section-head"><div><h2>Enter the Mind Trap</h2><p>One question at a time. No second-guessing… or maybe do.</p></div><span class="pill">✦ FREE TO PLAY · NO LOGIN</span></div>
+  <div class="game-layout">
+    <div class="panel">
+      <div class="game-top"><span class="game-top-label">Mind challenge</span><span class="level" id="levelLabel">LEVEL 01</span></div>
+      <div class="game-content" id="gameContent">
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="question-number" id="questionNumber">CHALLENGE 01 / 10</div>
+        <h3 class="question" id="question">What gets wetter the more it dries?</h3>
+        <p class="question-sub" id="questionSub">Read carefully. The simplest answer might be the right one.</p>
+        <div class="answers" id="answers"></div>
+        <div class="feedback" id="feedback" aria-live="polite">Choose your answer to continue.</div>
+        <div class="game-controls"><button class="hint-btn" id="hintBtn">💡 Reveal a hint</button><button class="btn primary hidden" id="nextBtn">Next challenge →</button></div>
+      </div>
+      <div class="game-content hidden" id="resultContent">
+        <div class="question-number">RUN COMPLETE</div>
+        <h3 class="question">Trap escaped… or did you?</h3>
+        <p class="question-sub" id="resultMessage">Your mind has been tested.</p>
+        <div class="stat-value"><span id="finalScore">0</span> pts</div>
+        <p class="question-sub">Want another shot at the puzzles?</p>
+        <button class="btn primary" id="restartBtn">↻ Play again</button>
+      </div>
+    </div>
+    <aside class="side">
+      <div class="panel stat-panel"><div class="stat-title">Your score</div><div class="stat-value"><span id="score">0</span><span style="font-size:15px;color:var(--muted)"> pts</span></div><div class="stat-note">+100 for every correct answer</div></div>
+      <div class="panel stat-panel"><div class="stat-title">Run stats</div><div class="stat-row"><span>Correct answers</span><b id="correctCount">0 / 10</b></div><div class="stat-row"><span>Hints used</span><b id="hintsCount">0</b></div><div class="stat-row"><span>Best score</span><b id="bestSide">0</b></div></div>
+      <div class="panel how" id="how"><h3 class="mini-title">🧩 How to play</h3><p><strong>1.</strong> Read each riddle carefully.<br><strong>2.</strong> Pick one of four answers.<br><strong>3.</strong> Use a hint if you get stuck.<br><strong>4.</strong> Earn points and beat your best score.</p></div>
+    </aside>
+  </div>
+</section>
+
+<section id="features" class="feature-grid">
+  <article class="feature"><div class="feature-icon">🌀</div><h3>Tricky by design</h3><p>Riddles that reward careful thinking instead of rushing to the obvious answer.</p></article>
+  <article class="feature"><div class="feature-icon">⚡</div><h3>Instant feedback</h3><p>See whether you cracked each challenge and learn the answer as you play.</p></article>
+  <article class="feature"><div class="feature-icon">🏆</div><h3>Beat your best</h3><p>Your high score is saved on this device, so you can try to top your own record.</p></article>
+</section>
+</main>
+<footer><span>© <span id="year"></span> <b>MIND TRAP</b>. Keep your brain guessing.</span><span>Made for curious minds ✦ No account needed</span></footer>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+const questions = [
+  {
+    "q": "What gets wetter the more it dries?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "A towel",
+      "The sun",
+      "A sponge",
+      "A cloud"
+    ],
+    "correct": 0,
+    "hint": "You might use it after a shower.",
+    "explain": "A towel absorbs water as it dries you."
+  },
+  {
+    "q": "How many months have at least 28 days?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "One",
+      "Six",
+      "Twelve",
+      "None"
+    ],
+    "correct": 2,
+    "hint": "Every month has this many days or more.",
+    "explain": "All 12 months have at least 28 days."
+  },
+  {
+    "q": "What has keys but cannot open locks?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "A guard",
+      "A piano",
+      "A treasure chest",
+      "A map"
+    ],
+    "correct": 1,
+    "hint": "It can make music.",
+    "explain": "A piano has musical keys."
+  },
+  {
+    "q": "You pass the runner in second place. What place are you in?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "First",
+      "Second",
+      "Third",
+      "Last"
+    ],
+    "correct": 1,
+    "hint": "You take the place of the runner you passed.",
+    "explain": "You are now in second place."
+  },
+  {
+    "q": "What has a head and a tail but no body?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "A snake",
+      "A coin",
+      "A comet",
+      "A kite"
+    ],
+    "correct": 1,
+    "hint": "You might flip it to make a decision.",
+    "explain": "A coin has heads and tails."
+  },
+  {
+    "q": "What can travel around the world while staying in one corner?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "A stamp",
+      "A compass",
+      "A shadow",
+      "A satellite"
+    ],
+    "correct": 0,
+    "hint": "It goes on an envelope.",
+    "explain": "A stamp stays in the envelope's corner."
+  },
+  {
+    "q": "If you take 2 apples from 3 apples, how many apples do you have?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "One",
+      "Two",
+      "Three",
+      "Five"
+    ],
+    "correct": 1,
+    "hint": "Count the apples you took.",
+    "explain": "You took two apples, so you have two."
+  },
+  {
+    "q": "What goes up but never comes down?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "A balloon",
+      "Smoke",
+      "Your age",
+      "A staircase"
+    ],
+    "correct": 2,
+    "hint": "It increases every birthday.",
+    "explain": "Your age only increases."
+  },
+  {
+    "q": "Which is heavier: 1 kg of iron or 1 kg of feathers?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "Iron",
+      "Feathers",
+      "They weigh the same",
+      "It depends"
+    ],
+    "correct": 2,
+    "hint": "Compare the units, not the materials.",
+    "explain": "Both weigh one kilogram."
+  },
+  {
+    "q": "A rooster lays an egg on a roof. Which way does it roll?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "Left",
+      "Right",
+      "It stays there",
+      "Roosters don't lay eggs"
+    ],
+    "correct": 3,
+    "hint": "Check the animal in the question.",
+    "explain": "Roosters do not lay eggs."
+  },
+  {
+    "q": "How many animals of each kind did Moses take onto the ark?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "Two",
+      "Seven",
+      "Fourteen",
+      "None"
+    ],
+    "correct": 3,
+    "hint": "Think of a famous ark story.",
+    "explain": "It was Noah, not Moses, who had the ark."
+  },
+  {
+    "q": "A farmer has 17 sheep. All but 9 run away. How many remain?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "8",
+      "9",
+      "17",
+      "26"
+    ],
+    "correct": 1,
+    "hint": "'All but 9' means all except 9.",
+    "explain": "Nine sheep remain."
+  },
+  {
+    "q": "What has one eye but cannot see?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "A storm",
+      "A needle",
+      "A potato",
+      "A camera"
+    ],
+    "correct": 1,
+    "hint": "It helps sew clothes.",
+    "explain": "A needle has an eye for thread."
+  },
+  {
+    "q": "Before Mount Everest was discovered, what was the highest mountain?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "K2",
+      "Kilimanjaro",
+      "Mount Everest",
+      "Mont Blanc"
+    ],
+    "correct": 2,
+    "hint": "Discovery does not change a mountain's height.",
+    "explain": "Everest was still the highest before it was discovered."
+  },
+  {
+    "q": "A plane crashes on a border. Where do they bury the survivors?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "North side",
+      "South side",
+      "At the border",
+      "Nowhere"
+    ],
+    "correct": 3,
+    "hint": "Pay attention to the word 'survivors'.",
+    "explain": "Survivors are alive, so they are not buried."
+  },
+  {
+    "q": "What has many teeth but cannot bite?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "A shark",
+      "A comb",
+      "A wolf",
+      "A zipper"
+    ],
+    "correct": 1,
+    "hint": "It can tidy your hair.",
+    "explain": "A comb has teeth but cannot bite."
+  },
+  {
+    "q": "You have one match and enter a dark room with a candle, lamp, and fireplace. What do you light first?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "Candle",
+      "Lamp",
+      "Fireplace",
+      "The match"
+    ],
+    "correct": 3,
+    "hint": "You need the match before anything else.",
+    "explain": "You light the match first."
+  },
+  {
+    "q": "What belongs to you but other people use it more than you do?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "Your shoes",
+      "Your name",
+      "Your phone",
+      "Your room"
+    ],
+    "correct": 1,
+    "hint": "People say it to get your attention.",
+    "explain": "Other people use your name when speaking to you."
+  },
+  {
+    "q": "How many times can you subtract 5 from 25?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "Once",
+      "Four times",
+      "Five times",
+      "Unlimited"
+    ],
+    "correct": 0,
+    "hint": "After the first subtraction, the number changes.",
+    "explain": "Only once; then you subtract from 20."
+  },
+  {
+    "q": "What has hands but cannot clap?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "A child",
+      "A clock",
+      "A monkey",
+      "A statue"
+    ],
+    "correct": 1,
+    "hint": "It tells you the time.",
+    "explain": "A clock has hands."
+  },
+  {
+    "q": "A doctor gives you 3 pills and says take one every half hour. How long until all are taken?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "30 minutes",
+      "60 minutes",
+      "90 minutes",
+      "120 minutes"
+    ],
+    "correct": 1,
+    "hint": "Take the first pill immediately.",
+    "explain": "Pills are taken at minute 0, 30, and 60."
+  },
+  {
+    "q": "There are 10 fish in a tank. Two drown. How many are left?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "8",
+      "10",
+      "2",
+      "0"
+    ],
+    "correct": 1,
+    "hint": "Can fish drown in their own tank in this riddle?",
+    "explain": "All 10 fish remain in the tank."
+  },
+  {
+    "q": "What comes once in a minute, twice in a moment, but never in a thousand years?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "The letter M",
+      "The letter T",
+      "A second",
+      "The letter N"
+    ],
+    "correct": 0,
+    "hint": "Look at the spelling of the words.",
+    "explain": "The letter M appears once in minute and twice in moment."
+  },
+  {
+    "q": "A bus driver goes the wrong way down a one-way street, passes a police officer, and isn't stopped. Why?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "Police were asleep",
+      "The bus was empty",
+      "The driver was walking",
+      "The road was closed"
+    ],
+    "correct": 2,
+    "hint": "The question doesn't say the driver is driving a bus.",
+    "explain": "The bus driver was walking."
+  },
+  {
+    "q": "What can fill a room but takes up no space?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "Fog",
+      "Light",
+      "Furniture",
+      "Air"
+    ],
+    "correct": 1,
+    "hint": "Flip a switch to get it.",
+    "explain": "Light fills a room without occupying space like an object."
+  },
+  {
+    "q": "If 5 machines make 5 toys in 5 minutes, how long do 100 machines take to make 100 toys?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "5 minutes",
+      "20 minutes",
+      "100 minutes",
+      "500 minutes"
+    ],
+    "correct": 0,
+    "hint": "Each machine makes one toy in five minutes.",
+    "explain": "All machines work at the same time, so it takes five minutes."
+  },
+  {
+    "q": "What number becomes smaller when you turn it upside down?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "6",
+      "9",
+      "8",
+      "0"
+    ],
+    "correct": 1,
+    "hint": "Rotate the digit 180 degrees.",
+    "explain": "A 9 turns into a 6, which is smaller."
+  },
+  {
+    "q": "A rooster is facing north. It lays an egg. Which direction does it roll?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "North",
+      "South",
+      "East",
+      "It doesn't"
+    ],
+    "correct": 3,
+    "hint": "Remember which bird can lay eggs.",
+    "explain": "A rooster doesn't lay eggs."
+  },
+  {
+    "q": "What has cities but no houses, forests but no trees, and rivers but no water?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "A dream",
+      "A map",
+      "A painting",
+      "A globe"
+    ],
+    "correct": 1,
+    "hint": "You might use it to plan a trip.",
+    "explain": "A map depicts these places."
+  },
+  {
+    "q": "Two fathers and two sons catch 3 fish, and each gets one fish. How?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "One fish was shared",
+      "They were lying",
+      "There are three people",
+      "One person gets two"
+    ],
+    "correct": 2,
+    "hint": "The family roles overlap.",
+    "explain": "There are a grandfather, father, and son: three people."
+  },
+  {
+    "q": "A clock takes 5 seconds to strike 6. How long does it take to strike 12 at the same pace?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "10 seconds",
+      "11 seconds",
+      "12 seconds",
+      "6 seconds"
+    ],
+    "correct": 1,
+    "hint": "Count the gaps between strikes, not the strikes.",
+    "explain": "Six strikes have five gaps; twelve have eleven gaps, so 11 seconds."
+  },
+  {
+    "q": "A lily pad doubles in size each day and covers a lake on day 20. On what day was the lake half covered?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "Day 10",
+      "Day 18",
+      "Day 19",
+      "Day 15"
+    ],
+    "correct": 2,
+    "hint": "It doubles from one day to the next.",
+    "explain": "It was half covered the day before, day 19."
+  },
+  {
+    "q": "A drawer has 10 black socks and 10 blue socks. In darkness, how many socks must you take to guarantee a matching pair?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "2",
+      "3",
+      "10",
+      "11"
+    ],
+    "correct": 1,
+    "hint": "There are only two colors.",
+    "explain": "Three socks guarantee at least two of one color."
+  },
+  {
+    "q": "A farmer has 20 cows. All but 7 leave. How many stay?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "7",
+      "13",
+      "20",
+      "27"
+    ],
+    "correct": 0,
+    "hint": "Read 'all but 7' carefully.",
+    "explain": "Seven cows stay."
+  },
+  {
+    "q": "Which word is spelled incorrectly in every dictionary?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "Incorrectly",
+      "Dictionary",
+      "Spelled",
+      "Every"
+    ],
+    "correct": 0,
+    "hint": "The question refers to a word in the sentence.",
+    "explain": "The word 'incorrectly' is itself spelled that way."
+  },
+  {
+    "q": "You see a boat filled with people. It has not sunk, but when you look again you don't see a single person. Why?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "They jumped out",
+      "They are hiding",
+      "Everyone was married",
+      "It vanished"
+    ],
+    "correct": 2,
+    "hint": "'Single' can describe relationship status.",
+    "explain": "You don't see a single person because everyone is married."
+  },
+  {
+    "q": "If yesterday was two days before Thursday, what day is today?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday"
+    ],
+    "correct": 1,
+    "hint": "Two days before Thursday is Tuesday.",
+    "explain": "If yesterday was Tuesday, today is Wednesday."
+  },
+  {
+    "q": "A man shaves several times a day but still has a beard. Who is he?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "A barber",
+      "A magician",
+      "A doctor",
+      "A farmer"
+    ],
+    "correct": 0,
+    "hint": "He shaves other people.",
+    "explain": "A barber shaves customers."
+  },
+  {
+    "q": "What can you hold in your right hand but never in your left hand?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "Your left elbow",
+      "Your right elbow",
+      "A coin",
+      "A book"
+    ],
+    "correct": 0,
+    "hint": "Try the action physically.",
+    "explain": "You can hold your left elbow with your right hand."
+  },
+  {
+    "q": "What five-letter word becomes shorter when you add two letters to it?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "Short",
+      "Small",
+      "Brief",
+      "Tiny"
+    ],
+    "correct": 0,
+    "hint": "The clue is literal and about a word.",
+    "explain": "Adding 'er' to short makes 'shorter'."
+  },
+  {
+    "q": "A bat and a ball cost $1.10 together. The bat costs $1 more than the ball. How much is the ball?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "10 cents",
+      "5 cents",
+      "15 cents",
+      "1 cent"
+    ],
+    "correct": 1,
+    "hint": "If the ball were 10 cents, the bat would be $1.10.",
+    "explain": "The ball costs 5 cents and the bat $1.05."
+  },
+  {
+    "q": "You have 8 identical-looking balls; one is heavier. What is the minimum number of balance-scale weighings to guarantee finding it?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "17 minutes",
+      "19 minutes",
+      "20 minutes",
+      "21 minutes"
+    ],
+    "correct": 0,
+    "hint": "Use the two fastest to shuttle the torch.",
+    "explain": "1&2 cross (2), 1 returns (1), 7&10 cross (10), 2 returns (2), 1&2 cross (2): 17 minutes."
+  },
+  {
+    "q": "A snail climbs 3 metres by day and slips 2 metres at night up a 10-metre wall. On which day does it reach the top?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "Day 8",
+      "Day 9",
+      "Day 10",
+      "Day 7"
+    ],
+    "correct": 1,
+    "hint": "On the final day, it doesn't slide back after reaching the top.",
+    "explain": "It gains 1 metre per full day-night cycle, reaches 8 metres after day 8, then reaches 10 on day 9."
+  },
+  {
+    "q": "Three switches are outside a closed room. One controls a bulb inside. You may enter the room once. How can you identify the switch?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "Try each switch quickly",
+      "Use bulb warmth and light",
+      "Guess by sound",
+      "Impossible"
+    ],
+    "correct": 1,
+    "hint": "A bulb can be warm even when off.",
+    "explain": "Turn one on for a while, switch it off, turn another on, then enter: lit means second; warm-off means first; cold-off means third."
+  },
+  {
+    "q": "A number is doubled, then 10 is added, and the result is 30. What was the number?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "5",
+      "10",
+      "15",
+      "20"
+    ],
+    "correct": 1,
+    "hint": "Work backward from 30.",
+    "explain": "Subtract 10 to get 20, then divide by 2 to get 10."
+  },
+  {
+    "q": "A father is 4 times as old as his son. In 20 years, he will be twice as old. How old is the son now?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "5",
+      "10",
+      "15",
+      "20"
+    ],
+    "correct": 1,
+    "hint": "Let the son's age be x; the father's is 4x.",
+    "explain": "4x + 20 = 2(x + 20), so x = 10."
+  },
+  {
+    "q": "A book's pages are numbered from 1 to 100. How many times is the digit 9 printed?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "10",
+      "19",
+      "20",
+      "21"
+    ],
+    "correct": 2,
+    "hint": "Count 9s in the ones and tens positions.",
+    "explain": "There are 10 in the ones position and 10 in the tens position: 20 total."
+  },
+  {
+    "q": "A square has 4 corners. If you cut off one corner with a straight cut, how many corners can it have?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "correct": 2,
+    "hint": "A cut can create two new corners.",
+    "explain": "Removing one corner can leave five corners."
+  },
+  {
+    "q": "You have a 3-litre jug and a 5-litre jug with no markings. Can you measure exactly 4 litres?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "Yes",
+      "No",
+      "Only with a scale",
+      "Only if both are full"
+    ],
+    "correct": 0,
+    "hint": "Fill, pour, and use the remaining space.",
+    "explain": "Fill 5L, pour into 3L leaving 2L; empty 3L, pour 2L into it, refill 5L, top up the 3L jug with 1L, leaving 4L in the 5L jug."
+  },
+  {
+    "q": "A family has two children. At least one is a boy. Assuming boy/girl equally likely, what is the probability both are boys?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "1/2",
+      "1/3",
+      "1/4",
+      "2/3"
+    ],
+    "correct": 1,
+    "hint": "List the equally likely pairs that contain at least one boy.",
+    "explain": "Possible pairs are BB, BG, GB; one of three is BB."
+  },
+  {
+    "q": "A number leaves remainder 1 when divided by 2, 3, 4, 5, and 6. What is the smallest positive number greater than 1 with this property?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "61",
+      "121",
+      "181",
+      "241"
+    ],
+    "correct": 0,
+    "hint": "Add 1 to a common multiple of 2 through 6.",
+    "explain": "The least common multiple is 60, so 60 + 1 = 61."
+  },
+  {
+    "q": "Four people need to cross a bridge at night with one torch. Their times are 1, 2, 7, and 10 minutes; at most two cross together and they move at the slower person's speed. Minimum time?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "120",
+      "210",
+      "720",
+      "504"
+    ],
+    "correct": 1,
+    "hint": "Choose the middle three digits in order from the remaining seven digits.",
+    "explain": "There are 7×6×5 = 210 codes."
+  },
+  {
+    "q": "A 2-digit number has digits that sum to 9. Reversing its digits makes it 27 larger. What is the number?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "36",
+      "45",
+      "54",
+      "63"
+    ],
+    "correct": 0,
+    "hint": "The tens digit is three less than the units digit.",
+    "explain": "36 reversed is 63, which is 27 greater; 3 + 6 = 9."
+  },
+  {
+    "q": "A bag has 4 red, 5 blue, and 6 green marbles. How many must you draw blind to guarantee 3 of the same color?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "correct": 2,
+    "hint": "In the worst case, take two of each color first.",
+    "explain": "After 6 you could have 2 of each; the 7th guarantees a third of one color."
+  },
+  {
+    "q": "If 12 workers finish a job in 10 days, how many days would 6 equally fast workers take?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "27",
+      "28",
+      "29",
+      "30"
+    ],
+    "correct": 1,
+    "hint": "On the day it reaches the top, it won't slip back.",
+    "explain": "After 27 nights it is at 27 feet; on day 28 it climbs to 30 and exits."
+  },
+  {
+    "q": "A train 100 metres long passes a pole in 5 seconds. What is its speed?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "10 m/s",
+      "15 m/s",
+      "20 m/s",
+      "25 m/s"
+    ],
+    "correct": 2,
+    "hint": "It travels its own length while passing a pole.",
+    "explain": "100 metres divided by 5 seconds is 20 m/s."
+  },
+  {
+    "q": "What is the next number: 2, 6, 12, 20, 30, ...?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday"
+    ],
+    "correct": 1,
+    "hint": "Divide 100 by 7 and use the remainder.",
+    "explain": "100 mod 7 is 2; two days after Monday is Wednesday."
+  },
+  {
+    "q": "A clock shows 3:15. What is the smaller angle between the hands?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "0°",
+      "7.5°",
+      "15°",
+      "22.5°"
+    ],
+    "correct": 1,
+    "hint": "The minute hand is at 90°. The hour hand has moved a quarter of the way from 3 to 4.",
+    "explain": "At 3:15 the hour hand is at 97.5°, so the difference is 7.5°."
+  },
+  {
+    "q": "A 10-metre rope is cut into pieces of 2 metres. How many cuts are needed?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "4",
+      "5",
+      "6",
+      "8"
+    ],
+    "correct": 0,
+    "hint": "Each cut increases the number of pieces by one.",
+    "explain": "Five pieces need four cuts."
+  },
+  {
+    "q": "If 3 cats catch 3 mice in 3 minutes, how many cats are needed to catch 100 mice in 100 minutes at the same rate?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "1",
+      "3",
+      "33",
+      "100"
+    ],
+    "correct": 1,
+    "hint": "Each cat catches one mouse every three minutes.",
+    "explain": "Three cats catch 100 mice in 100 minutes (each catches about 33⅓ mice)."
+  },
+  {
+    "q": "A prisoner is told: 'If you tell a lie, you will be hanged; if you tell the truth, you will be shot.' What can he say to make the rule impossible to apply consistently?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "I am hungry",
+      "You will hang me",
+      "I am innocent",
+      "It is raining"
+    ],
+    "correct": 1,
+    "hint": "Think about what happens if his statement is true versus false.",
+    "explain": "If they hang him, his statement is true and he should be shot; if they shoot him, it is false and he should be hanged."
+  },
+  {
+    "q": "You have 9 coins; one is lighter. Minimum balance-scale weighings to guarantee finding it?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "correct": 1,
+    "hint": "Split them into three equal groups.",
+    "explain": "Weigh 3 vs 3, then weigh 1 vs 1 from the lighter group."
+  },
+  {
+    "q": "There are 100 closed doors. Person 1 toggles every door; person 2 every second; person 3 every third, through person 100. Which doors remain open?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "Multiples of 2",
+      "Prime-numbered doors",
+      "Perfect-square doors",
+      "Odd-numbered doors"
+    ],
+    "correct": 2,
+    "hint": "A door changes state once for each divisor it has.",
+    "explain": "Only perfect squares have an odd number of divisors, so those remain open."
+  },
+  {
+    "q": "A cube is painted on all sides and cut into 27 equal smaller cubes. How many small cubes have exactly two painted faces?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "6",
+      "8",
+      "12",
+      "18"
+    ],
+    "correct": 2,
+    "hint": "These are the cubes along edges, excluding corners.",
+    "explain": "Each of the 12 edges has one middle cube, so 12."
+  },
+  {
+    "q": "What is the smallest positive integer divisible by every integer from 1 through 10?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "3",
+      "4",
+      "6",
+      "7"
+    ],
+    "correct": 0,
+    "hint": "They are odd multiples of 15 below 100.",
+    "explain": "15, 45, 75: there are 3."
+  },
+  {
+    "q": "A clock loses 10 minutes every hour. It is set correctly at noon. What time will it show when the real time is 6 p.m.?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "5:00",
+      "5:10",
+      "5:20",
+      "6:00"
+    ],
+    "correct": 0,
+    "hint": "It loses 10 minutes per real hour.",
+    "explain": "Over 6 hours it loses 60 minutes, so it shows 5 p.m."
+  },
+  {
+    "q": "A and B together have 30 coins. A has twice as many as B. How many coins does B have?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "5",
+      "10",
+      "15",
+      "20"
+    ],
+    "correct": 1,
+    "hint": "Let B be x, so A is 2x.",
+    "explain": "3x = 30, so B has 10."
+  },
+  {
+    "q": "You have two ropes, each burns completely in 60 minutes, but not at a uniform rate. How can you measure 45 minutes?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "Light one end of each rope",
+      "Light both ends of one rope and one end of the other; then light the other end",
+      "Cut one rope in half",
+      "Impossible"
+    ],
+    "correct": 1,
+    "hint": "A rope lit at both ends burns out in 30 minutes.",
+    "explain": "Light rope A at both ends and rope B at one end. When A finishes at 30 minutes, light the other end of B; it finishes 15 minutes later."
+  },
+  {
+    "q": "How many squares of all sizes are on a standard 8×8 chessboard?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "64",
+      "128",
+      "204",
+      "256"
+    ],
+    "correct": 2,
+    "hint": "Count 1×1, 2×2, and so on up to 8×8.",
+    "explain": "64+49+36+25+16+9+4+1 = 204."
+  },
+  {
+    "q": "A number's 40% is 24. What is 150% of that number?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "60",
+      "75",
+      "90",
+      "96"
+    ],
+    "correct": 2,
+    "hint": "First find the whole number.",
+    "explain": "The number is 60; 150% of 60 is 90."
+  },
+  {
+    "q": "You have 12 balls, one is different in weight but you don't know if heavier or lighter. Minimum weighings on a balance scale to always identify the odd ball and whether it is heavier or lighter?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "2",
+      "3",
+      "4",
+      "6"
+    ],
+    "correct": 1,
+    "hint": "Each weighing has three possible outcomes.",
+    "explain": "Three weighings can distinguish 24 possibilities, enough for 12 balls being heavier or lighter."
+  },
+  {
+    "q": "A 5-digit code uses distinct digits from 1–9. How many codes begin with 1 and end with 9?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "120",
+      "210",
+      "720",
+      "504"
+    ],
+    "correct": 0,
+    "hint": "Choose the middle three digits in order from the remaining seven digits.",
+    "explain": "There are 7×6×5 = 210 codes. Correct option should be 210."
+  },
+  {
+    "q": "A bag contains 3 red and 2 blue balls. Two are drawn without replacement. Probability both are red?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "1/5",
+      "3/10",
+      "2/5",
+      "1/2"
+    ],
+    "correct": 1,
+    "hint": "Multiply the chance of red first by red second.",
+    "explain": "3/5 × 2/4 = 3/10."
+  },
+  {
+    "q": "A rectangle's perimeter is 30 cm and its length is 9 cm. What is its area?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "45 cm²",
+      "54 cm²",
+      "63 cm²",
+      "72 cm²"
+    ],
+    "correct": 1,
+    "hint": "Two lengths and two widths make the perimeter.",
+    "explain": "2(9+w)=30, so w=6; area is 9×6=54 cm²."
+  },
+  {
+    "q": "What is the next number: 1, 11, 21, 1211, 111221, ...?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "312211",
+      "211221",
+      "13112221",
+      "1112221"
+    ],
+    "correct": 0,
+    "hint": "Read aloud how many of each digit appears in the previous term.",
+    "explain": "111221 is 'three 1s, two 2s, one 1' → 312211."
+  },
+  {
+    "q": "A snail is at the bottom of a 30-foot well. It climbs 3 feet by day and slips 2 feet at night. How many days to get out?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "27",
+      "28",
+      "29",
+      "30"
+    ],
+    "correct": 2,
+    "hint": "On the day it reaches the top, it won't slip back.",
+    "explain": "After 27 nights it is at 27 feet; on day 28 it climbs to 30 and exits. Correct option should be 28."
+  },
+  {
+    "q": "A 3-digit number has digits that sum to 12. The hundreds digit is twice the units digit, and the tens digit is 2 more than the units digit. What is it?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "1/3",
+      "1/6",
+      "1/5",
+      "1/2"
+    ],
+    "correct": 0,
+    "hint": "They are odd multiples of 15 below 100.",
+    "explain": "15, 45, 75: there are 3 odd multiples of 15 below 100, so 3/100."
+  },
+  {
+    "q": "If today is Monday, what day will it be 100 days from now?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday"
+    ],
+    "correct": 2,
+    "hint": "Divide 100 by 7 and use the remainder.",
+    "explain": "100 mod 7 is 2; two days after Monday is Wednesday. Correct option should be Wednesday."
+  },
+  {
+    "q": "How many diagonals does a hexagon have?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "6",
+      "9",
+      "12",
+      "15"
+    ],
+    "correct": 1,
+    "hint": "Each vertex connects diagonally to all but itself and its two neighbours.",
+    "explain": "n(n−3)/2 = 6×3/2 = 9."
+  },
+  {
+    "q": "A tank is filled by pipe A in 6 hours and pipe B in 3 hours. If both work together, how long to fill it?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "1 hour",
+      "2 hours",
+      "3 hours",
+      "4.5 hours"
+    ],
+    "correct": 1,
+    "hint": "Add the fractions of the tank filled each hour.",
+    "explain": "1/6 + 1/3 = 1/2 tank per hour, so 2 hours."
+  },
+  {
+    "q": "A group of 5 people each shakes hands with every other person exactly once. How many handshakes occur?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "7",
+      "11",
+      "23",
+      "35"
+    ],
+    "correct": 1,
+    "hint": "The number is one less than a common multiple of 2, 3, and 4.",
+    "explain": "11 gives remainders 1, 2, 3 and is the smallest."
+  },
+  {
+    "q": "A number is increased by 20%, then decreased by 20%. What is the overall change?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "36",
+      "72",
+      "81",
+      "100"
+    ],
+    "correct": 0,
+    "hint": "Choose any 2 of the 4 vertical lines and any 2 of the 4 horizontal lines.",
+    "explain": "C(4,2)×C(4,2)=6×6=36."
+  },
+  {
+    "q": "In a class, 60% study French, 50% study Spanish, and 20% study neither. What percentage study both?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "10%",
+      "20%",
+      "30%",
+      "40%"
+    ],
+    "correct": 2,
+    "hint": "80% study at least one language; use inclusion-exclusion.",
+    "explain": "60 + 50 − both = 80, so both = 30%."
+  },
+  {
+    "q": "A fair die is rolled twice. What is the probability the total is 7?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "1/12",
+      "1/6",
+      "1/5",
+      "1/3"
+    ],
+    "correct": 1,
+    "hint": "There are 36 equally likely ordered outcomes.",
+    "explain": "Six outcomes total 7, so 6/36 = 1/6."
+  },
+  {
+    "q": "A rectangle is 12 by 5. What is the length of its diagonal?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "13",
+      "15",
+      "17",
+      "√119"
+    ],
+    "correct": 0,
+    "hint": "Use the Pythagorean theorem.",
+    "explain": "√(12²+5²)=√169=13."
+  },
+  {
+    "q": "A number between 1 and 100 is divisible by both 3 and 5, but not by 2. How many such numbers are there?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "3",
+      "4",
+      "6",
+      "7"
+    ],
+    "correct": 1,
+    "hint": "They are odd multiples of 15 below 100.",
+    "explain": "15, 45, 75: there are 3. Correct option should be 3."
+  },
+  {
+    "q": "A clock's hands overlap between 2 and 3 o'clock. At what time after 2 do they overlap?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "10 10/11 minutes",
+      "10 minutes",
+      "11 minutes",
+      "12 minutes"
+    ],
+    "correct": 0,
+    "hint": "The minute hand gains 5.5 degrees per minute over the hour hand.",
+    "explain": "At 2:00 the gap is 60°; 60/5.5 = 10 10/11 minutes."
+  },
+  {
+    "q": "A and B can complete a task in 12 days together. A alone takes 20 days. How long does B alone take?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "24 days",
+      "30 days",
+      "36 days",
+      "40 days"
+    ],
+    "correct": 1,
+    "hint": "Subtract A's daily work rate from their combined rate.",
+    "explain": "B's rate is 1/12−1/20=1/30, so 30 days."
+  },
+  {
+    "q": "A box has 5 red, 4 blue, and 3 yellow balls. Minimum draws to guarantee two balls of the same color?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "1/3",
+      "2/5",
+      "1/2",
+      "11/30"
+    ],
+    "correct": 0,
+    "hint": "List the primes up to 30.",
+    "explain": "There are 10 primes from 1 to 30, so probability is 10/30 = 1/3."
+  },
+  {
+    "q": "What is the remainder when 2^10 is divided by 7?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "1",
+      "2",
+      "4",
+      "6"
+    ],
+    "correct": 1,
+    "hint": "Powers of 2 cycle modulo 7 every three steps.",
+    "explain": "2³ leaves remainder 1; 2^10 = 2^(9)×2 leaves remainder 2."
+  },
+  {
+    "q": "A 100-storey building has two identical glass balls. Find the highest floor from which a ball can be dropped without breaking, minimizing the worst-case number of drops. What is the minimum worst-case number?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "10",
+      "14",
+      "20",
+      "50"
+    ],
+    "correct": 1,
+    "hint": "Use decreasing jump sizes so the total covers 100 floors.",
+    "explain": "14 drops suffice because 14+13+...+1 = 105."
+  },
+  {
+    "q": "There are 25 horses and 5 lanes. No stopwatch; each race ranks only the horses in it. Minimum races to find the three fastest horses?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "correct": 2,
+    "hint": "Race five groups, then race the winners.",
+    "explain": "After 5 heats and a winners' race, only 5 candidates remain for top three; a final race among the relevant contenders gives 7 total."
+  },
+  {
+    "q": "You have 1000 bottles; exactly one is poisoned. A test takes 24 hours, and you have 10 test subjects for one round. Can you identify the bottle in one round?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "Yes, using binary patterns",
+      "No, need 1000 subjects",
+      "Yes, by testing 100 each",
+      "No, need 10 rounds"
+    ],
+    "correct": 0,
+    "hint": "Each subject can represent a binary digit.",
+    "explain": "Ten subjects create 2^10 = 1024 distinct result patterns, enough to identify one of 1000 bottles."
+  },
+  {
+    "q": "What is the smallest number that leaves remainders 1, 2, and 3 when divided by 2, 3, and 4 respectively?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "7",
+      "11",
+      "23",
+      "35"
+    ],
+    "correct": 0,
+    "hint": "The number is one less than a common multiple of 2, 3, and 4.",
+    "explain": "11 gives remainders 1, 2, 3 and is the smallest. Correct option should be 11."
+  },
+  {
+    "q": "A 4×4 grid of points forms 3×3 small squares. How many rectangles of all sizes can be made using the grid lines?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "36",
+      "72",
+      "81",
+      "100"
+    ],
+    "correct": 1,
+    "hint": "Choose any 2 of the 4 vertical lines and any 2 of the 4 horizontal lines.",
+    "explain": "C(4,2)×C(4,2)=6×6=36. Correct option should be 36."
+  },
+  {
+    "q": "A bag has 4 white and 6 black balls. You draw 3 without replacement. Probability all three are black?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "1/6",
+      "1/6?",
+      "1/3",
+      "1/2"
+    ],
+    "correct": 0,
+    "hint": "Use combinations: choose 3 black from 6 over 3 from 10.",
+    "explain": "C(6,3)/C(10,3)=20/120=1/6."
+  },
+  {
+    "q": "What is the last digit of 7^2026?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "1",
+      "3",
+      "7",
+      "9"
+    ],
+    "correct": 3,
+    "hint": "The last digits repeat in a cycle of four.",
+    "explain": "7,9,3,1; 2026 mod 4 is 2, so the last digit is 9."
+  },
+  {
+    "q": "A room has 10 people. Everyone shakes hands with everyone else once. Then 2 people leave before shaking hands with anyone. How many handshakes happen among the remaining people?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "28",
+      "36",
+      "45",
+      "56"
+    ],
+    "correct": 0,
+    "hint": "Only 8 people participate in handshakes.",
+    "explain": "8×7/2 = 28."
+  },
+  {
+    "q": "A number is chosen from 1 to 30. What is the probability it is prime?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "1/3",
+      "2/5",
+      "1/2",
+      "11/30"
+    ],
+    "correct": 1,
+    "hint": "List the primes up to 30.",
+    "explain": "There are 10 primes from 1 to 30, so probability is 10/30 = 1/3. Correct option should be 1/3."
+  },
+  {
+    "q": "Three boxes are labelled APPLES, ORANGES, and MIXED, but every label is wrong. You may draw one fruit from one box. Which box should you draw from to correctly label all boxes?",
+    "sub": "Choose carefully. The wording may hide the trick.",
+    "a": [
+      "APPLES",
+      "ORANGES",
+      "MIXED",
+      "Any box"
+    ],
+    "correct": 2,
+    "hint": "Because every label is wrong, the MIXED-labelled box cannot be mixed.",
+    "explain": "Draw from the box labelled MIXED; its fruit reveals its true single-fruit contents, then infer the other two."
+  }
+];
+let order=[], index=0, score=0, correct=0, hints=0, answered=false, hintShown=false;
+const $=id=>document.getElementById(id);
+function getBest(){try{return Number(localStorage.getItem("mindTrapBest")||0)}catch(e){return 0}}
+function setBest(n){try{localStorage.setItem("mindTrapBest",String(n))}catch(e){}}
+function updateStats(){ $("score").textContent=score; $("correctCount").textContent=correct+" / "+questions.length; $("hintsCount").textContent=hints; $("bestSide").textContent=getBest(); $("bestTop").textContent=getBest(); }
+function shuffleQuestions(){order=[...questions.keys()]; for(let i=order.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]];}}
+function startGame(){shuffleQuestions();index=0;score=0;correct=0;hints=0;answered=false;hintShown=false;$("gameContent").classList.remove("hidden");$("resultContent").classList.add("hidden");updateStats();renderQuestion();$("play").scrollIntoView({behavior:"smooth",block:"start"});}
+function renderQuestion(){
+ const q=questions[order[index]];answered=false;hintShown=false;
+ $("progressFill").style.width=(index/questions.length*100)+"%";
+ $("questionNumber").textContent=`CHALLENGE ${String(index+1).padStart(2,"0")} / ${questions.length}`;
+ $("levelLabel").textContent="LEVEL "+String(Math.floor(index/10)+1).padStart(2,"0");
+ $("question").textContent=q.q;$("questionSub").textContent=q.sub || ["Warm-up: spot the obvious trap.","Easy: read the wording carefully.","Easy+: look for hidden assumptions.","Medium: slow down and think.","Medium+: combine clues.","Hard: use logic and arithmetic.","Hard+: plan your steps.","Expert: connect several ideas.","Master: calculate precisely.","Nightmare: every detail matters."][Math.floor(index/10)];$("feedback").textContent="Choose your answer to continue.";$("feedback").className="feedback";
+ $("hintBtn").disabled=false;$("hintBtn").textContent="💡 Reveal a hint";$("nextBtn").classList.add("hidden");
+ const box=$("answers");box.innerHTML="";
+ q.a.forEach((answer,i)=>{const b=document.createElement("button");b.className="answer";b.innerHTML=`<span class="letter">${String.fromCharCode(65+i)}</span><span></span>`;b.querySelector("span:last-child").textContent=answer;b.addEventListener("click",()=>chooseAnswer(i,b));box.appendChild(b);});
+}
+function chooseAnswer(choice,button){
+ if(answered)return;answered=true;const q=questions[order[index]], buttons=[...$("answers").querySelectorAll("button")];
+ buttons.forEach((b,i)=>{b.disabled=true;if(i===q.correct)b.classList.add("correct")});
+ const feedback=$("feedback");
+ if(choice===q.correct){score+=100;correct++;feedback.textContent="✓ Correct! "+q.explain;feedback.className="feedback good";}
+ else{button.classList.add("wrong");feedback.textContent="Not quite. "+q.explain;feedback.className="feedback bad";}
+ $("hintBtn").disabled=true;$("nextBtn").classList.remove("hidden");$("nextBtn").textContent=index===questions.length-1?"See results →":"Next challenge →";
+ $("progressFill").style.width=((index+1)/questions.length*100)+"%";if(score>getBest())setBest(score);updateStats();
+}
+function showHint(){if(answered||hintShown)return;hintShown=true;hints++;$("feedback").textContent="💡 Hint: "+questions[order[index]].hint;$("feedback").className="feedback";$("hintBtn").textContent="Hint revealed";$("hintBtn").disabled=true;updateStats();}
+function nextQuestion(){if(!answered)return;if(index<questions.length-1){index++;renderQuestion()}else showResults();}
+function showResults(){$("gameContent").classList.add("hidden");$("resultContent").classList.remove("hidden");$("progressFill").style.width="100%";$("finalScore").textContent=score;let msg=correct===10?"Incredible! You escaped every trap. Your brain is on fire.":correct>=7?"Sharp thinking! You beat most of the traps. Can you get a perfect run?":correct>=4?"Not bad, trap-breaker. Watch the wording and try again.":"The traps got you this time. Slow down, read carefully, and give it another shot.";$("resultMessage").textContent=`You solved ${correct} out of ${questions.length} challenges and used ${hints} hint(s). ${msg}`;updateStats();}
+let toastTimer;function toast(message){const t=$("toast");t.textContent=message;t.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove("show"),2400)}
+$("heroPlay").addEventListener("click",startGame);$("hintBtn").addEventListener("click",showHint);$("nextBtn").addEventListener("click",nextQuestion);$("restartBtn").addEventListener("click",startGame);
+$("year").textContent=new Date().getFullYear();updateStats();renderQuestion();
+</script>
+</body>
+</html>
